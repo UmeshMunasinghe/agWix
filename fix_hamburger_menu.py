@@ -18,7 +18,7 @@ HAMBURGER_JS = """
         background-color: #F8F6F6 !important;
         z-index: 999999 !important;
         box-sizing: border-box !important;
-        padding: 50px 80px !important;
+        padding: 50px 80px 40px 100px !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
@@ -29,11 +29,13 @@ HAMBURGER_JS = """
         width: 100% !important;
         max-width: 1200px !important;
         margin: 0 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
       }
       .offline-menu-overlay nav ul {
         list-style: none !important;
         padding: 0 !important;
-        margin: 40px 0 0 0 !important;
+        margin: 30px 0 35px 0 !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
@@ -63,6 +65,14 @@ HAMBURGER_JS = """
         color: #14242D !important;
         line-height: 1 !important;
         font-weight: 300 !important;
+      }
+      .offline-menu-banner-img {
+        width: 100% !important;
+        max-height: 380px !important;
+        object-fit: cover !important;
+        border-radius: 4px !important;
+        margin-top: 10px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
       }
     `;
     document.head.appendChild(style);
@@ -110,8 +120,14 @@ HAMBURGER_JS = """
           };
         });
 
+        var bannerImg = document.createElement("img");
+        bannerImg.className = "offline-menu-banner-img";
+        bannerImg.src = "assets/static.wixstatic.com/media/c837a6_aac3b59d32cf44dd929c877aeac4ebed~mv2.png";
+        bannerImg.alt = "Roofing banner";
+
         container.appendChild(closeBtn);
         container.appendChild(nav);
+        container.appendChild(bannerImg);
         overlay.appendChild(container);
 
         document.body.appendChild(overlay);
@@ -135,7 +151,7 @@ def apply_hamburger_fix():
 
                 with open(file_path, "w", encoding="utf-8") as file:
                     file.write(content)
-                print(f"Fixed full height overlay hamburger menu in {f}")
+                print(f"Added banner image to full menu overlay in {f}")
 
 if __name__ == "__main__":
     apply_hamburger_fix()
