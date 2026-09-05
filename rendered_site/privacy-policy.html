@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en" style=""><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" id="wixDesktopViewport" name="viewport"/>
@@ -705,9 +704,8 @@ ul.font_100,ol.font_100{color:#080808;font-family:"Arial, Helvetica, sans-serif"
 })();
 </script>
 
-
 <style id="offline-hamburger-custom-css">
-/* Hamburger Open Button */
+/* Hamburger Open Button Fixes */
 button.hamburger-open-button {
   cursor: pointer !important;
   pointer-events: auto !important;
@@ -717,7 +715,6 @@ button.hamburger-open-button {
   justify-content: center !important;
   background: transparent !important;
   border: none !important;
-  padding: 0 !important;
 }
 
 button.hamburger-open-button svg {
@@ -726,7 +723,7 @@ button.hamburger-open-button svg {
   height: 28px !important;
 }
 
-/* Modal Overlay: Full White Background matching screenshot */
+/* Modal Drawer Overlay Fixes */
 .hamburger-menu[role="dialog"] {
   position: fixed !important;
   top: 0 !important;
@@ -734,18 +731,17 @@ button.hamburger-open-button svg {
   width: 100vw !important;
   height: 100vh !important;
   z-index: 99999 !important;
-  background-color: #f7f6f5 !important;
+  background-color: #ffffff !important;
   display: none !important;
   flex-direction: column !important;
   overflow-y: auto !important;
-  box-sizing: border-box !important;
 }
 
 .hamburger-menu[role="dialog"].offline-menu-open {
   display: flex !important;
 }
 
-/* Backdrop */
+/* Ensure backdrop covers screen when open */
 ._backdrop_15sgs_13.offline-menu-open {
   position: fixed !important;
   top: 0 !important;
@@ -753,97 +749,97 @@ button.hamburger-open-button svg {
   width: 100vw !important;
   height: 100vh !important;
   z-index: 99998 !important;
-  background-color: rgba(0, 0, 0, 0.4) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
   display: block !important;
 }
 
-/* Dialog Container */
+/* Dialog content structure */
 .hamburger-menu ._dialogContent_15sgs_22 {
   display: flex !important;
   flex-direction: column !important;
-  min-height: 100vh !important;
+  min-height: 100% !important;
   width: 100% !important;
   position: relative !important;
   box-sizing: border-box !important;
-  background-color: #f7f6f5 !important;
-  padding: 0 !important;
+  background: #ffffff !important;
 }
 
-/* Header & Close Button positioned at top right */
+/* Header with close button */
 .hamburger-menu header._header_15sgs_54 {
   display: flex !important;
   justify-content: flex-end !important;
   align-items: center !important;
-  padding: 30px 40px !important;
+  padding: 16px 24px !important;
   width: 100% !important;
   box-sizing: border-box !important;
+  position: relative !important;
+  z-index: 100001 !important;
 }
 
 button.hamburger-close-button {
   cursor: pointer !important;
   background: transparent !important;
   border: none !important;
-  padding: 0 !important;
+  padding: 8px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  z-index: 100002 !important;
 }
 
 button.hamburger-close-button svg {
   fill: #000000 !important;
-  width: 32px !important;
-  height: 32px !important;
+  width: 24px !important;
+  height: 24px !important;
 }
 
-/* Main Layout */
+/* Main body in modal drawer */
 .hamburger-menu main._main_15sgs_68 {
   display: flex !important;
   flex-direction: column !important;
   flex: 1 !important;
   width: 100% !important;
+  padding: 20px 32px !important;
   box-sizing: border-box !important;
-  padding: 0 !important;
 }
 
-/* Menu items container */
+/* Menu links styling */
 .hamburger-menu ul._container_s6hzk_173 {
   list-style: none !important;
-  padding: 20px 0 40px 60px !important;
-  margin: 0 !important;
+  padding: 0 !important;
+  margin: 0 0 30px 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 16px !important;
+  gap: 20px !important;
 }
 
-/* Styling Menu Items with exact font style & letter spacing */
 .hamburger-menu a[data-part="menu-item-link"] {
   font-family: Arial, sans-serif !important;
-  font-size: 22px !important;
-  font-weight: 700 !important;
-  letter-spacing: 2px !important;
-  color: #1a2b3c !important;
-  text-transform: uppercase !important;
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  color: #111111 !important;
   text-decoration: none !important;
-  display: inline-block !important;
-  transition: opacity 0.2s ease !important;
+  display: block !important;
+  transition: color 0.2s ease !important;
 }
 
 .hamburger-menu a[data-part="menu-item-link"]:hover {
-  opacity: 0.7 !important;
+  color: #555555 !important;
 }
 
-/* Bottom Roofing Image Container matching uploaded image */
+/* Background image styling inside drawer */
 .hamburger-menu .hamburger-menu-content._content_15sgs_74 {
   margin-top: auto !important;
   width: 100% !important;
-  line-height: 0 !important;
+  overflow: hidden !important;
+  border-radius: 8px !important;
 }
 
 .hamburger-menu ._image_8j9vj_1 img {
   width: 100% !important;
-  height: 380px !important;
+  height: auto !important;
+  max-height: 250px !important;
   object-fit: cover !important;
-  object-position: center bottom !important;
   display: block !important;
 }
 
@@ -1110,16 +1106,15 @@ To learn more about this, check out our article “<span style="text-decoration:
 <script data-url="https://static.parastorage.com/services/wix-thunderbolt/dist/handleBrowserZoom.inline.74d0404f.bundle.min.js">"use strict";(self.webpackJsonp__wix_thunderbolt_app=self.webpackJsonp__wix_thunderbolt_app||[]).push([["7804"],{46795(e,t,r){var i=r(34442),o=r(24073),n=r(76526);(()=>{if("undefined"!=typeof window)try{let e;if(!(0,i.M5)(window))return;let t=(e=window.viewerModel?.experiments||{},(0,n.isExperimentOpen)(e,"specs.thunderbolt.browserZoomMobileOnloadDetection"));t&&(0,i.bl)(window);let r=(0,o.pb)(window,t);r>1&&(0,i.Ar)(window,void 0,r)}catch(e){console.error("[Browser Zoom] Failed to initialize:",e)}})()},34442(e,t,r){r.d(t,{Ar:()=>s,M5:()=>n,Pz:()=>c,bl:()=>p,fA:()=>a,kC:()=>m,ve:()=>f,zs:()=>o});var i=r(24073);let o=e=>!0===e.zoomSpxFontApplied,n=e=>{if(!e?.navigator?.userAgent||o(e))return!1;let t=e.navigator.userAgent;if((0,i.AR)(t))return!1;let r=/firefox/i.test(t),n=(0,i.fJ)(t);return t.includes("Chrome")||n||r},l=(e,t)=>{e.zoomSpxFontApplied=t},a=e=>{e.zoomSpxFontApplied=!1},s=(e,t,r)=>{var i,o;if(!e?.document)return 0;let a="undefined"!=typeof performance?performance.now():Date.now();if(!n(e))return l(e,!1),0;try{let n,s;r&&(i=e.document,i.documentElement.style.setProperty("--browser-zoom",r.toFixed(2)));let u=e.document.querySelectorAll("body *:not(script):not(style):not(svg):not(path):not(g):not(defs):not(clipPath)"),d=(n=[],u.forEach(t=>{n.push(e.getComputedStyle(t))}),n);r&&e.document.documentElement.style.removeProperty("--browser-zoom");let c=(s=0,u.forEach((e,t)=>{let r=d[t],i=r.fontSize;i&&"0px"!==i&&(e.style.fontSize=i,s++);let o=r.lineHeight;o&&"normal"!==o&&(e.style.lineHeight=o)}),s);l(e,!0);let p=("undefined"!=typeof performance?performance.now():Date.now())-a,m=e.visualViewport;return o={frozenElements:c,totalElements:u.length,providedZoomFactor:r??null,devicePixelRatio:e.devicePixelRatio??null,visualViewportScale:m?.scale??null,duration:p,timestamp:Date.now()},t?t.meter("freeze_fonts_for_browser_zoom",{paramsOverrides:{duration:String(o.duration),frozenElements:String(o.frozenElements),totalElements:String(o.totalElements),providedZoomFactor:o.providedZoomFactor?String(o.providedZoomFactor):"",devicePixelRatio:o.devicePixelRatio?String(o.devicePixelRatio):"",timestamp:String(o.timestamp),source:"runtime"}}):"undefined"!=typeof performance&&"function"==typeof performance.mark&&performance.mark("browser-zoom-detector",{detail:{...o,source:"browser_zoom_detector_pre_hydration"}}),c}catch(r){let e;return e=`Failed to freeze fonts with zoom factor: ${r instanceof Error?r.message:String(r)}`,t?t.captureError(r,{tags:{feature:"accessibility-browser-zoom"}}):console.error(e,r),0}},u=(e,t)=>{if(!e)return null;if(e.navigator?.userAgent&&(0,i.ox)(e.navigator.userAgent)){let r=e.visualViewport;if(r){let e=()=>{r.scale<=1||(t(),r.removeEventListener("resize",e))};return r.addEventListener("resize",e),()=>r.removeEventListener("resize",e)}return null}return e.addEventListener("resize",t,{once:!0}),()=>e.removeEventListener("resize",t)},d=(e,t)=>{if(!e)return null;let r=e.devicePixelRatio||1,i=e.matchMedia(`(resolution: ${r}dppx)`);return i.addEventListener("change",t,{once:!0}),()=>i.removeEventListener("change",t)},c=(e,t)=>e&&n(e)?e.navigator?.userAgent&&(0,i.fJ)(e.navigator.userAgent)?u(e,()=>{o(e)||s(e,t)}):d(e,()=>{o(e)||(0,i.Yb)(e.devicePixelRatio,e.innerWidth,e.outerWidth)>1&&s(e,t)}):null,p=e=>{if(!e)return;let t=e.navigator?.userAgent||"";!(0,i.QC)(t)||(0,i.gn)()||(0,i.X_)(e.devicePixelRatio)},m=(e,t,r=!1)=>{if(!n(e))return;let o=(0,i.pb)(e,r);o>1&&s(e,t,o)},f=(e,t,r=!1)=>{if(!t||!e)return null;let o=(0,i.pb)(e,r)>1,n=(0,i.wg)(e),l=e.navigator?.userAgent&&(0,i.fJ)(e.navigator.userAgent),a=()=>{let r={userAgent:e.navigator?.userAgent||"",devicePixelRatio:e.devicePixelRatio||1,innerWidth:e.innerWidth,outerWidth:e.outerWidth,visualViewportScale:e.visualViewport?.scale},i={hasInitialZoom:String(o),infoInitialZoom:JSON.stringify(n),infoAfterZoom:JSON.stringify(r),zoomDuringSession:"true"};t.interactionStarted("browser-zoom-during-session",{customParams:i}),t.interactionEnded("browser-zoom-during-session",{customParams:i})};return l?u(e,a):d(e,a)}},24073(e,t,r){r.d(t,{AR:()=>s,QC:()=>a,X_:()=>f,Yb:()=>u,fJ:()=>n,gn:()=>m,ox:()=>l,pb:()=>d,wg:()=>c});let i=/Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i,o=/iPhone|iPad|iPod/i,n=e=>!!e&&i.test(e),l=e=>!!e&&o.test(e),a=e=>!!e&&n(e)&&!l(e),s=e=>l(e)&&e.includes("Chrome"),u=(e,t=0,r=0)=>{if(!e||!t||!r)return 1;let i=e&&t&&r?Math.trunc(e*t)<=r?1:2:1;return!i||e<=i?1:Math.round(e/i*100)/100},d=(e,t=!1)=>{if(!e)return 1;let r=e.navigator?.userAgent||"",i=e.devicePixelRatio||1;if(l(r))return e.visualViewport?.scale||1;if(a(r)){if(!t)return 1;let e=m();return e?v(i,e.dpr):1}return u(i,e.innerWidth,e.outerWidth)},c=e=>{let t=e.visualViewport?.scale;return{devicePixelRatio:e.devicePixelRatio||1,innerWidth:e.innerWidth,outerWidth:e.outerWidth,...null!=t?{visualViewportScale:t}:{}}},p="wix_dpr_baseline",m=()=>{try{let e=localStorage.getItem(p);if(!e)return null;let t=Number(e);return t>0?{dpr:t}:null}catch{return null}},f=e=>{if(e>0)try{localStorage.setItem(p,String(e))}catch{}},v=(e,t)=>!e||!t||t<=0||e<=t?1:Math.round(e/t*100)/100},76526(e,t,r){r.d(t,{isExperimentOpen:()=>n});var i=r(7073);let o=[],n=(e,t)=>o.includes(t)||(0,i.kg)(e,t)},7073(e,t,r){r.d(t,{kg:()=>o});var i=["true","b","c","new","enabled"];function o(e,t){let r=e[t];return!0===r||"string"==typeof r&&i.includes(r.toLowerCase())}}},function(e){e(e.s=46795)}]);
 //# sourceMappingURL=https://static.parastorage.com/services/wix-thunderbolt/dist/handleBrowserZoom.inline.74d0404f.bundle.min.js.map</script>
 
-
 <script id="offline-hamburger-js">
 document.addEventListener("DOMContentLoaded", function() {
   function initHamburger() {
-    var openBtns = document.querySelectorAll(".hamburger-open-button");
+    var openBtn = document.querySelector(".hamburger-open-button");
     var closeBtn = document.querySelector(".hamburger-close-button");
     var dialog = document.querySelector(".hamburger-menu[role=\"dialog\"]");
     var backdrop = document.querySelector("._backdrop_15sgs_13");
 
-    if (!dialog) return;
+    if (!openBtn || !dialog) return;
 
     function openMenu() {
       dialog.classList.add("offline-menu-open");
@@ -1133,12 +1128,10 @@ document.addEventListener("DOMContentLoaded", function() {
       document.body.classList.remove("offline-menu-active");
     }
 
-    openBtns.forEach(function(btn) {
-      btn.addEventListener("click", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        openMenu();
-      });
+    openBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openMenu();
     });
 
     if (closeBtn) {
