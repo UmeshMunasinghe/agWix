@@ -627,104 +627,119 @@ ul.font_100,ol.font_100{color:#080808;font-family:"Arial, Helvetica, sans-serif"
 </script>
 
 
+
+
+
 <script id="offline-hamburger-menu-fix">
 (function() {
   document.addEventListener("DOMContentLoaded", function() {
-    // 1. Inject styling for responsive mobile overlay
+    // Inject styling matching exact Wix original header menu dropdown layout
     var style = document.createElement('style');
     style.innerHTML = `
-      .offline-menu-overlay {
-        position: fixed !important;
+      .offline-menu-drawer {
+        position: absolute !important;
         top: 0 !important;
         left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        background-color: #F1EFE9 !important;
+        width: 100% !important;
+        background-color: #F8F6F6 !important;
         z-index: 99999 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 20px !important;
         box-sizing: border-box !important;
+        padding: 50px 80px 50px 100px !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06) !important;
+        border-bottom: 1px solid #E4DDD3 !important;
       }
-      .offline-menu-overlay nav ul {
+      .offline-menu-drawer-content {
+        position: relative !important;
+        max-width: 1920px !important;
+        margin: 0 auto !important;
+      }
+      .offline-menu-drawer nav ul {
         list-style: none !important;
         padding: 0 !important;
         margin: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
-        gap: 25px !important;
+        align-items: flex-start !important;
+        gap: 22px !important;
       }
-      .offline-menu-overlay nav a {
+      .offline-menu-drawer nav a {
         font-family: 'Syne', sans-serif !important;
         font-size: 26px !important;
         font-weight: 700 !important;
         color: #14242D !important;
         text-transform: uppercase !important;
-        text-decoration: none !important;
+        text-decoration: underline !important;
+        letter-spacing: 0.05em !important;
+        transition: color 0.2s !important;
       }
-      .offline-menu-close {
+      .offline-menu-drawer nav a:hover {
+        color: #FFC650 !important;
+      }
+      .offline-menu-close-btn {
         position: absolute !important;
-        top: 25px !important;
-        right: 25px !important;
+        top: -10px !important;
+        right: 0px !important;
         background: none !important;
         border: none !important;
-        font-size: 36px !important;
+        font-size: 46px !important;
         cursor: pointer !important;
         color: #14242D !important;
         line-height: 1 !important;
+        font-weight: 300 !important;
       }
     `;
     document.head.appendChild(style);
 
-    // 2. Global event listener for hamburger button click
     document.addEventListener("click", function(e) {
       var burgerBtn = e.target.closest("button[aria-label='Menu'], .hamburger-open-button, button[data-testid='buttonContent']");
       if (burgerBtn && burgerBtn.querySelector('svg[data-type="shape"], #animated-icon')) {
         e.preventDefault();
         e.stopPropagation();
 
-        var existingOverlay = document.querySelector(".offline-menu-overlay");
-        if (existingOverlay) {
-          existingOverlay.remove();
+        var header = document.querySelector("header") || document.body;
+        var existingDrawer = document.querySelector(".offline-menu-drawer");
+        
+        if (existingDrawer) {
+          existingDrawer.remove();
           return;
         }
 
-        // Create overlay
-        var overlay = document.createElement("div");
-        overlay.className = "offline-menu-overlay";
+        var drawer = document.createElement("div");
+        drawer.className = "offline-menu-drawer";
+
+        var drawerContent = document.createElement("div");
+        drawerContent.className = "offline-menu-drawer-content";
 
         var closeBtn = document.createElement("button");
-        closeBtn.className = "offline-menu-close";
+        closeBtn.className = "offline-menu-close-btn";
         closeBtn.innerHTML = "&times;";
         closeBtn.setAttribute("aria-label", "Close Menu");
         closeBtn.onclick = function() {
-          overlay.remove();
+          drawer.remove();
         };
 
         var nav = document.createElement("nav");
         nav.innerHTML = `
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="services.html">SERVICES</a></li>
+            <li><a href="projects.html">PROJECTS</a></li>
+            <li><a href="index.html#contact">CONTACT</a></li>
           </ul>
         `;
 
-        // Attach click listeners to nav items inside overlay
         nav.querySelectorAll("a").forEach(function(a) {
           a.onclick = function() {
-            overlay.remove();
+            drawer.remove();
           };
         });
 
-        overlay.appendChild(closeBtn);
-        overlay.appendChild(nav);
-        document.body.appendChild(overlay);
+        drawerContent.appendChild(closeBtn);
+        drawerContent.appendChild(nav);
+        drawer.appendChild(drawerContent);
+
+        header.insertBefore(drawer, header.firstChild);
       }
     }, true);
   });
