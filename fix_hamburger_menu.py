@@ -122,7 +122,7 @@ HAMBURGER_JS = """
 
         var bannerImg = document.createElement("img");
         bannerImg.className = "offline-menu-banner-img";
-        bannerImg.src = "assets/static.wixstatic.com/media/c837a6_aac3b59d32cf44dd929c877aeac4ebed~mv2.png";
+        bannerImg.src = "assets/roof_banner.png";
         bannerImg.alt = "Roofing banner";
 
         container.appendChild(closeBtn);
@@ -151,7 +151,7 @@ def apply_hamburger_fix():
 
                 with open(file_path, "w", encoding="utf-8") as file:
                     file.write(content)
-                print(f"Added banner image to full menu overlay in {f}")
+                print(f"Fixed clean asset path for roofing image in {f}")
 
 if __name__ == "__main__":
     apply_hamburger_fix()
