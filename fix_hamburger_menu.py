@@ -27,7 +27,6 @@ HAMBURGER_JS = """
       .offline-menu-container {
         position: relative !important;
         width: 100% !important;
-        max-width: 1200px !important;
         margin: 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
