@@ -608,10 +608,87 @@ wow-image img {
 }
 </style>
 <style id="offline-image-visibility-fix">
-wow-image, wow-image img, ._image_8j9vj_1 img {
+wow-image, wow-image img, ._image_8j9vj_1 img, img {
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
+}
+
+/* Hide Accessibility Skip Button by default */
+#SKIP_TO_CONTENT_BTN, .SKIP_TO_CONTENT_BTN {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    animation: none !important;
+}
+
+/* Base keyframe animations */
+@keyframes offlineFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes offlineFadeInOnly {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes offlineRoofZoomIn {
+    from {
+        opacity: 0;
+        transform: scale(1.18);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Elements ready for scroll reveal animation - SLOWED DOWN to 3.2s */
+.offline-scroll-target {
+    opacity: 0;
+    transition: opacity 3.2s cubic-bezier(0.16, 1, 0.3, 1), transform 3.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.offline-scroll-target.offline-in-view {
+    animation: offlineFadeUp 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* Smooth opacity-only fade-in for team avatar photos - SLOWED DOWN to 4.0s */
+.offline-fade-target {
+    opacity: 0;
+}
+.offline-fade-target.offline-in-view {
+    animation: offlineFadeInOnly 4.0s ease-in-out forwards !important;
+}
+
+/* Blueprints photo scale-down animation on scroll reveal - SLOWED DOWN to 4.5s */
+.offline-zoom-target {
+    opacity: 0;
+}
+.offline-zoom-target.offline-in-view {
+    animation: offlineRoofZoomIn 4.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* Hero background image MUST NOT animate */
+#bgImg_comp-mhs1bc7o, img[src*="img_c7b0b5b089.png"], #comp-mhs1bc7o img {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
 }
 </style>
 <script id="offline-image-api-override">
@@ -1004,4 +1081,49 @@ To learn more about this, check out our article “<span style="text-decoration:
     }, true);
   });
 })();
-</script></body></html>
+</script><script id="offline-scroll-reveal-script">
+(function() {
+    function initScrollReveal() {
+        const selectors = 'section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h1, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h2, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h3, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h4, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h5, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h6, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) p, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) span, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) .wrichtext, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) .wixui-rich-text, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) [data-testid="richTextElement"], section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) .button:not(#SKIP_TO_CONTENT_BTN), section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) button:not(#SKIP_TO_CONTENT_BTN)';
+        const targets = document.querySelectorAll(selectors);
+
+        targets.forEach(el => {
+            el.classList.add('offline-scroll-target');
+        });
+
+        // Add opacity fade reveal targets (like Team photos)
+        const fadeImages = document.querySelectorAll('img[src*="img_e724ef5ea0.avif"], img[src*="img_d38c4b792b.avif"], img[src*="img_5ed15e0939.avif"], #comp-mlnn9nmg, #comp-mlnn821m, #comp-mlnn82r1');
+        fadeImages.forEach(img => {
+            img.classList.add('offline-fade-target');
+        });
+
+        const zoomImage = document.querySelector('img[src*="img_a29f8c043d.webp"]') || document.querySelector('#comp-mlnev6ze');
+        if (zoomImage) {
+            zoomImage.classList.add('offline-zoom-target');
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('offline-in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -20px 0px'
+        });
+
+        document.querySelectorAll('.offline-scroll-target, .offline-zoom-target, .offline-fade-target').forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initScrollReveal);
+    } else {
+        initScrollReveal();
+    }
+})();
+</script>
+</body></html>

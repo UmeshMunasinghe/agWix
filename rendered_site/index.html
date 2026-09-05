@@ -1378,10 +1378,87 @@ wow-image img {
 }
 </style>
 <style id="offline-image-visibility-fix">
-wow-image, wow-image img, ._image_8j9vj_1 img {
+wow-image, wow-image img, ._image_8j9vj_1 img, img {
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
+}
+
+/* Hide Accessibility Skip Button by default */
+#SKIP_TO_CONTENT_BTN, .SKIP_TO_CONTENT_BTN {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    animation: none !important;
+}
+
+/* Base keyframe animations */
+@keyframes offlineFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes offlineFadeInOnly {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes offlineRoofZoomIn {
+    from {
+        opacity: 0;
+        transform: scale(1.18);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Elements ready for scroll reveal animation - SLOWED DOWN to 3.2s */
+.offline-scroll-target {
+    opacity: 0;
+    transition: opacity 3.2s cubic-bezier(0.16, 1, 0.3, 1), transform 3.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.offline-scroll-target.offline-in-view {
+    animation: offlineFadeUp 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* Smooth opacity-only fade-in for team avatar photos - SLOWED DOWN to 4.0s */
+.offline-fade-target {
+    opacity: 0;
+}
+.offline-fade-target.offline-in-view {
+    animation: offlineFadeInOnly 4.0s ease-in-out forwards !important;
+}
+
+/* Blueprints photo scale-down animation on scroll reveal - SLOWED DOWN to 4.5s */
+.offline-zoom-target {
+    opacity: 0;
+}
+.offline-zoom-target.offline-in-view {
+    animation: offlineRoofZoomIn 4.5s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* Hero background image MUST NOT animate */
+#bgImg_comp-mhs1bc7o, img[src*="img_c7b0b5b089.png"], #comp-mhs1bc7o img {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
 }
 </style>
 <script id="offline-image-api-override">
@@ -1637,4 +1714,49 @@ Satisfaction</h3></div></interact-element><!--/$--><!--$--><interact-element dat
 <!-- detect browser zoom -->
 <script data-url="https://static.parastorage.com/services/wix-thunderbolt/dist/handleBrowserZoom.inline.74d0404f.bundle.min.js">"use strict";(self.webpackJsonp__wix_thunderbolt_app=self.webpackJsonp__wix_thunderbolt_app||[]).push([["7804"],{46795(e,t,r){var i=r(34442),o=r(24073),n=r(76526);(()=>{if("undefined"!=typeof window)try{let e;if(!(0,i.M5)(window))return;let t=(e=window.viewerModel?.experiments||{},(0,n.isExperimentOpen)(e,"specs.thunderbolt.browserZoomMobileOnloadDetection"));t&&(0,i.bl)(window);let r=(0,o.pb)(window,t);r>1&&(0,i.Ar)(window,void 0,r)}catch(e){console.error("[Browser Zoom] Failed to initialize:",e)}})()},34442(e,t,r){r.d(t,{Ar:()=>s,M5:()=>n,Pz:()=>c,bl:()=>p,fA:()=>a,kC:()=>m,ve:()=>f,zs:()=>o});var i=r(24073);let o=e=>!0===e.zoomSpxFontApplied,n=e=>{if(!e?.navigator?.userAgent||o(e))return!1;let t=e.navigator.userAgent;if((0,i.AR)(t))return!1;let r=/firefox/i.test(t),n=(0,i.fJ)(t);return t.includes("Chrome")||n||r},l=(e,t)=>{e.zoomSpxFontApplied=t},a=e=>{e.zoomSpxFontApplied=!1},s=(e,t,r)=>{var i,o;if(!e?.document)return 0;let a="undefined"!=typeof performance?performance.now():Date.now();if(!n(e))return l(e,!1),0;try{let n,s;r&&(i=e.document,i.documentElement.style.setProperty("--browser-zoom",r.toFixed(2)));let u=e.document.querySelectorAll("body *:not(script):not(style):not(svg):not(path):not(g):not(defs):not(clipPath)"),d=(n=[],u.forEach(t=>{n.push(e.getComputedStyle(t))}),n);r&&e.document.documentElement.style.removeProperty("--browser-zoom");let c=(s=0,u.forEach((e,t)=>{let r=d[t],i=r.fontSize;i&&"0px"!==i&&(e.style.fontSize=i,s++);let o=r.lineHeight;o&&"normal"!==o&&(e.style.lineHeight=o)}),s);l(e,!0);let p=("undefined"!=typeof performance?performance.now():Date.now())-a,m=e.visualViewport;return o={frozenElements:c,totalElements:u.length,providedZoomFactor:r??null,devicePixelRatio:e.devicePixelRatio??null,visualViewportScale:m?.scale??null,duration:p,timestamp:Date.now()},t?t.meter("freeze_fonts_for_browser_zoom",{paramsOverrides:{duration:String(o.duration),frozenElements:String(o.frozenElements),totalElements:String(o.totalElements),providedZoomFactor:o.providedZoomFactor?String(o.providedZoomFactor):"",devicePixelRatio:o.devicePixelRatio?String(o.devicePixelRatio):"",timestamp:String(o.timestamp),source:"runtime"}}):"undefined"!=typeof performance&&"function"==typeof performance.mark&&performance.mark("browser-zoom-detector",{detail:{...o,source:"browser_zoom_detector_pre_hydration"}}),c}catch(r){let e;return e=`Failed to freeze fonts with zoom factor: ${r instanceof Error?r.message:String(r)}`,t?t.captureError(r,{tags:{feature:"accessibility-browser-zoom"}}):console.error(e,r),0}},u=(e,t)=>{if(!e)return null;if(e.navigator?.userAgent&&(0,i.ox)(e.navigator.userAgent)){let r=e.visualViewport;if(r){let e=()=>{r.scale<=1||(t(),r.removeEventListener("resize",e))};return r.addEventListener("resize",e),()=>r.removeEventListener("resize",e)}return null}return e.addEventListener("resize",t,{once:!0}),()=>e.removeEventListener("resize",t)},d=(e,t)=>{if(!e)return null;let r=e.devicePixelRatio||1,i=e.matchMedia(`(resolution: ${r}dppx)`);return i.addEventListener("change",t,{once:!0}),()=>i.removeEventListener("change",t)},c=(e,t)=>e&&n(e)?e.navigator?.userAgent&&(0,i.fJ)(e.navigator.userAgent)?u(e,()=>{o(e)||s(e,t)}):d(e,()=>{o(e)||(0,i.Yb)(e.devicePixelRatio,e.innerWidth,e.outerWidth)>1&&s(e,t)}):null,p=e=>{if(!e)return;let t=e.navigator?.userAgent||"";!(0,i.QC)(t)||(0,i.gn)()||(0,i.X_)(e.devicePixelRatio)},m=(e,t,r=!1)=>{if(!n(e))return;let o=(0,i.pb)(e,r);o>1&&s(e,t,o)},f=(e,t,r=!1)=>{if(!t||!e)return null;let o=(0,i.pb)(e,r)>1,n=(0,i.wg)(e),l=e.navigator?.userAgent&&(0,i.fJ)(e.navigator.userAgent),a=()=>{let r={userAgent:e.navigator?.userAgent||"",devicePixelRatio:e.devicePixelRatio||1,innerWidth:e.innerWidth,outerWidth:e.outerWidth,visualViewportScale:e.visualViewport?.scale},i={hasInitialZoom:String(o),infoInitialZoom:JSON.stringify(n),infoAfterZoom:JSON.stringify(r),zoomDuringSession:"true"};t.interactionStarted("browser-zoom-during-session",{customParams:i}),t.interactionEnded("browser-zoom-during-session",{customParams:i})};return l?u(e,a):d(e,a)}},24073(e,t,r){r.d(t,{AR:()=>s,QC:()=>a,X_:()=>f,Yb:()=>u,fJ:()=>n,gn:()=>m,ox:()=>l,pb:()=>d,wg:()=>c});let i=/Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i,o=/iPhone|iPad|iPod/i,n=e=>!!e&&i.test(e),l=e=>!!e&&o.test(e),a=e=>!!e&&n(e)&&!l(e),s=e=>l(e)&&e.includes("Chrome"),u=(e,t=0,r=0)=>{if(!e||!t||!r)return 1;let i=e&&t&&r?Math.trunc(e*t)<=r?1:2:1;return!i||e<=i?1:Math.round(e/i*100)/100},d=(e,t=!1)=>{if(!e)return 1;let r=e.navigator?.userAgent||"",i=e.devicePixelRatio||1;if(l(r))return e.visualViewport?.scale||1;if(a(r)){if(!t)return 1;let e=m();return e?v(i,e.dpr):1}return u(i,e.innerWidth,e.outerWidth)},c=e=>{let t=e.visualViewport?.scale;return{devicePixelRatio:e.devicePixelRatio||1,innerWidth:e.innerWidth,outerWidth:e.outerWidth,...null!=t?{visualViewportScale:t}:{}}},p="wix_dpr_baseline",m=()=>{try{let e=localStorage.getItem(p);if(!e)return null;let t=Number(e);return t>0?{dpr:t}:null}catch{return null}},f=e=>{if(e>0)try{localStorage.setItem(p,String(e))}catch{}},v=(e,t)=>!e||!t||t<=0||e<=t?1:Math.round(e/t*100)/100},76526(e,t,r){r.d(t,{isExperimentOpen:()=>n});var i=r(7073);let o=[],n=(e,t)=>o.includes(t)||(0,i.kg)(e,t)},7073(e,t,r){r.d(t,{kg:()=>o});var i=["true","b","c","new","enabled"];function o(e,t){let r=e[t];return!0===r||"string"==typeof r&&i.includes(r.toLowerCase())}}},function(e){e(e.s=46795)}]);
 //# sourceMappingURL=https://static.parastorage.com/services/wix-thunderbolt/dist/handleBrowserZoom.inline.74d0404f.bundle.min.js.map</script>
+<script id="offline-scroll-reveal-script">
+(function() {
+    function initScrollReveal() {
+        const selectors = 'section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h1, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h2, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h3, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h4, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h5, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) h6, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) p, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) span, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) .wrichtext, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) .wixui-rich-text, section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) [data-testid="richTextElement"], section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) .button:not(#SKIP_TO_CONTENT_BTN), section:not(#comp-mb7ogrp_r_comp-mb7ogqqn):not(.wixui-header) button:not(#SKIP_TO_CONTENT_BTN)';
+        const targets = document.querySelectorAll(selectors);
+
+        targets.forEach(el => {
+            el.classList.add('offline-scroll-target');
+        });
+
+        // Add opacity fade reveal targets (like Team photos)
+        const fadeImages = document.querySelectorAll('img[src*="img_e724ef5ea0.avif"], img[src*="img_d38c4b792b.avif"], img[src*="img_5ed15e0939.avif"], #comp-mlnn9nmg, #comp-mlnn821m, #comp-mlnn82r1');
+        fadeImages.forEach(img => {
+            img.classList.add('offline-fade-target');
+        });
+
+        const zoomImage = document.querySelector('img[src*="img_a29f8c043d.webp"]') || document.querySelector('#comp-mlnev6ze');
+        if (zoomImage) {
+            zoomImage.classList.add('offline-zoom-target');
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('offline-in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -20px 0px'
+        });
+
+        document.querySelectorAll('.offline-scroll-target, .offline-zoom-target, .offline-fade-target').forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initScrollReveal);
+    } else {
+        initScrollReveal();
+    }
+})();
+</script>
 </body></html>
