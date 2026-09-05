@@ -7,38 +7,41 @@ HAMBURGER_JS = """
 <script id="offline-hamburger-menu-fix">
 (function() {
   document.addEventListener("DOMContentLoaded", function() {
-    // Inject styling matching exact Wix original header menu dropdown layout
     var style = document.createElement('style');
     style.innerHTML = `
-      .offline-menu-drawer {
-        position: absolute !important;
+      .offline-menu-overlay {
+        position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        width: 100% !important;
+        width: 100vw !important;
+        height: 100vh !important;
         background-color: #F8F6F6 !important;
-        z-index: 99999 !important;
+        z-index: 999999 !important;
         box-sizing: border-box !important;
-        padding: 50px 80px 50px 100px !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.06) !important;
-        border-bottom: 1px solid #E4DDD3 !important;
+        padding: 50px 80px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        overflow-y: auto !important;
       }
-      .offline-menu-drawer-content {
+      .offline-menu-container {
         position: relative !important;
-        max-width: 1920px !important;
+        width: 100% !important;
+        max-width: 1200px !important;
         margin: 0 auto !important;
       }
-      .offline-menu-drawer nav ul {
+      .offline-menu-overlay nav ul {
         list-style: none !important;
         padding: 0 !important;
-        margin: 0 !important;
+        margin: 40px 0 0 0 !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 22px !important;
       }
-      .offline-menu-drawer nav a {
+      .offline-menu-overlay nav a {
         font-family: 'Syne', sans-serif !important;
-        font-size: 26px !important;
+        font-size: 32px !important;
         font-weight: 700 !important;
         color: #14242D !important;
         text-transform: uppercase !important;
@@ -46,7 +49,7 @@ HAMBURGER_JS = """
         letter-spacing: 0.05em !important;
         transition: color 0.2s !important;
       }
-      .offline-menu-drawer nav a:hover {
+      .offline-menu-overlay nav a:hover {
         color: #FFC650 !important;
       }
       .offline-menu-close-btn {
@@ -55,7 +58,7 @@ HAMBURGER_JS = """
         right: 0px !important;
         background: none !important;
         border: none !important;
-        font-size: 46px !important;
+        font-size: 48px !important;
         cursor: pointer !important;
         color: #14242D !important;
         line-height: 1 !important;
@@ -70,26 +73,24 @@ HAMBURGER_JS = """
         e.preventDefault();
         e.stopPropagation();
 
-        var header = document.querySelector("header") || document.body;
-        var existingDrawer = document.querySelector(".offline-menu-drawer");
-        
-        if (existingDrawer) {
-          existingDrawer.remove();
+        var existingOverlay = document.querySelector(".offline-menu-overlay");
+        if (existingOverlay) {
+          existingOverlay.remove();
           return;
         }
 
-        var drawer = document.createElement("div");
-        drawer.className = "offline-menu-drawer";
+        var overlay = document.createElement("div");
+        overlay.className = "offline-menu-overlay";
 
-        var drawerContent = document.createElement("div");
-        drawerContent.className = "offline-menu-drawer-content";
+        var container = document.createElement("div");
+        container.className = "offline-menu-container";
 
         var closeBtn = document.createElement("button");
         closeBtn.className = "offline-menu-close-btn";
         closeBtn.innerHTML = "&times;";
         closeBtn.setAttribute("aria-label", "Close Menu");
         closeBtn.onclick = function() {
-          drawer.remove();
+          overlay.remove();
         };
 
         var nav = document.createElement("nav");
@@ -105,15 +106,15 @@ HAMBURGER_JS = """
 
         nav.querySelectorAll("a").forEach(function(a) {
           a.onclick = function() {
-            drawer.remove();
+            overlay.remove();
           };
         });
 
-        drawerContent.appendChild(closeBtn);
-        drawerContent.appendChild(nav);
-        drawer.appendChild(drawerContent);
+        container.appendChild(closeBtn);
+        container.appendChild(nav);
+        overlay.appendChild(container);
 
-        header.insertBefore(drawer, header.firstChild);
+        document.body.appendChild(overlay);
       }
     }, true);
   });
@@ -134,7 +135,7 @@ def apply_hamburger_fix():
 
                 with open(file_path, "w", encoding="utf-8") as file:
                     file.write(content)
-                print(f"Updated hamburger menu matching exact original layout in {f}")
+                print(f"Fixed full height overlay hamburger menu in {f}")
 
 if __name__ == "__main__":
     apply_hamburger_fix()
