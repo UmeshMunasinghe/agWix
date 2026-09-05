@@ -120,9 +120,15 @@ HAMBURGER_JS = """
           };
         });
 
+        // Determine correct relative path to roof_banner.png based on page depth
+        var imgPath = "assets/roof_banner.png";
+        if (window.location.pathname.includes("/my-site/")) {
+          imgPath = "../assets/roof_banner.png";
+        }
+
         var bannerImg = document.createElement("img");
         bannerImg.className = "offline-menu-banner-img";
-        bannerImg.src = "assets/roof_banner.png";
+        bannerImg.src = imgPath;
         bannerImg.alt = "Roofing banner";
 
         container.appendChild(closeBtn);
@@ -151,7 +157,7 @@ def apply_hamburger_fix():
 
                 with open(file_path, "w", encoding="utf-8") as file:
                     file.write(content)
-                print(f"Fixed clean asset path for roofing image in {f}")
+                print(f"Updated dynamic relative image path in {f}")
 
 if __name__ == "__main__":
     apply_hamburger_fix()

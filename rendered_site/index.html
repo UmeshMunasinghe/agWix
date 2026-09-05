@@ -1265,6 +1265,9 @@ ul.font_100,ol.font_100{color:#080808;font-family:"Arial, Helvetica, sans-serif"
 
 
 
+
+
+
 <script id="offline-hamburger-menu-fix">
 (function() {
   document.addEventListener("DOMContentLoaded", function() {
@@ -1381,9 +1384,15 @@ ul.font_100,ol.font_100{color:#080808;font-family:"Arial, Helvetica, sans-serif"
           };
         });
 
+        // Determine correct relative path to roof_banner.png based on page depth
+        var imgPath = "assets/roof_banner.png";
+        if (window.location.pathname.includes("/my-site/")) {
+          imgPath = "../assets/roof_banner.png";
+        }
+
         var bannerImg = document.createElement("img");
         bannerImg.className = "offline-menu-banner-img";
-        bannerImg.src = "assets/roof_banner.png";
+        bannerImg.src = imgPath;
         bannerImg.alt = "Roofing banner";
 
         container.appendChild(closeBtn);
