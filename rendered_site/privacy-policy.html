@@ -601,6 +601,28 @@ header section, header .container {
   height: 100% !important;
 }
 </style>
+<style id="offline-image-override">
+wow-image img {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+</style>
+<style id="offline-image-visibility-fix">
+wow-image, wow-image img, ._image_8j9vj_1 img {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
+</style>
+<script id="offline-image-api-override">
+window.imageClientApi = {
+    getResponsiveImageProps: function() { return { css: {}, attr: {}, srcset: "" }; },
+    getData: function() { return { uri: "", css: {}, attr: {} }; },
+    getScaleToFillImageURL: function(id) { return id; },
+    getScaleToFitImageURL: function(id) { return id; },
+    getCropImageURL: function(id) { return id; }
+};
+</script>
 </head>
 <body class="responsive">
 <script type="text/javascript">
