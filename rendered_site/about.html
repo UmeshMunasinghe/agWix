@@ -584,6 +584,51 @@ ul.font_100,ol.font_100{color:#080808;font-family:"Arial, Helvetica, sans-serif"
 })();
 </script>
 
+
+<script id="offline-contact-scroll">
+(function() {
+  function handleAnchorScroll() {
+    var hash = window.location.hash;
+    if (hash === "#contact" || hash === "contact") {
+      // Find form component, contact section or button to scroll to
+      var target = document.querySelector("#comp-mlnflcdw") || document.querySelector("form") || document.querySelector("footer");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    handleAnchorScroll();
+
+    // Global click handler for Get in Touch & Contact buttons
+    document.addEventListener("click", function(e) {
+      var btn = e.target.closest("a, button");
+      if (btn) {
+        var href = btn.getAttribute("href") || "";
+        var text = (btn.textContent || "").trim().toLowerCase();
+        
+        if (href.includes("#contact") || text.includes("get in touch") || text.includes("contact")) {
+          // If already on index page or index.html
+          if (window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/")) {
+            e.preventDefault();
+            if (window.location.hash !== "#contact") {
+              history.pushState(null, null, "#contact");
+            }
+            handleAnchorScroll();
+          } else {
+            e.preventDefault();
+            window.location.href = "index.html#contact";
+          }
+        }
+      }
+    }, true);
+  });
+
+  window.addEventListener("hashchange", handleAnchorScroll);
+})();
+</script>
+
 </head>
 <body class="responsive">
 <script type="text/javascript">
